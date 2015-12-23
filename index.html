@@ -3,29 +3,122 @@
 	<head>
 		<meta charset="utf-8">
 		<title>D3 Page Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script type="text/javascript" src="/d3/d3.v3.js"></script>
+		<link rel="stylesheet" type="text/css" href="/styles/main.css">
 	</head>
+
 	<body>
 		<script type="text/javascript">
 
-			// d3.select("body").append("p").text("New paragraph!");
-			var dataset = [5, 10, 15, 20, 25, 30, 35];
+			//dataset variable version 1
+			// var dataset = [5, 10, 15, 20, 25];
+			
+			//dataset variable with randomly generated, rounded down numbers
+			var dataset = [];
+			for (var i = 0; i < 20; i++) {
+				var newNumber = Math.floor(Math.random() * 35);
+				dataset.push(newNumber);
+			}
+			console.log(dataset);
 
-			d3.select("body").selectAll("p")
+			//bar chart example using divs
+			var div = d3.select("body").selectAll("div")
 				.data(dataset)
 				.enter()
-				.append("p")
-				.text(function(d) { 
-					return d; 
-				})
-				.style("color", function(d) {
-					if (d < 25) {
-						return "orange";
-					} else {
-						return "blue";
-					}
+				.append("div")
+				.attr("class", "bar");
+
+				div.style("height", function(d) {
+					var barHeight = d * 2;
+					return barHeight + "px";
 				});
 
-		</script>
+			//svg example using circles w/ attr cx, cy, and r
+			var w = 1000;
+			var h = 100;
+				
+			var svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+
+			var circles = svg.selectAll("circle")
+							 .data(dataset)
+							 .enter()
+							 .append("circle")
+							 .attr("fill", function(d) {
+			   						return "rgb(" + (d * 100) + " 0, 0)"
+			   				 });
+
+			circles.attr("cx", function(d, i) {
+						return (i * 100) + 50;
+			})
+					.attr("cy", h/2)
+					.attr("r", function(d) {
+						return d;
+			});
+
+			//bar chart using svgs, with bars growing down from top
+			//set width and height variables and other attributes
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+
+			// //create svg element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length); //bar width of 20 plus 1 for padding
+			   })
+			   .attr("y", 0)
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 2;
+			   })
+			   .attr("fill", function(d) {
+			   		return "rgb(0, " + (d * 10) + ", 0)"
+			   	});
+
+			//bar chart using svgs, with bars growing up from bottom
+			//set width and height variables and other attributes
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+
+			//create svg element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length); //bar width of 20 plus 1 for padding
+			   })
+			   .attr("y", function(d) {
+			   		return h - d;
+			   })
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 5;
+			   })
+			   .attr("fill", function(d) {
+			   		return "rgb(0, 0, " + (d * 10) + ")";
+			   });
+
+
+		</script>	
+
 	</body>
 </html>
