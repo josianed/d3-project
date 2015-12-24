@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="utf-8" http-equiv="encoding">
+		<title>D3 Page Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript" src="../d3/d3.v3.js"></script>
+		<nav>
+			<a href="../index.html">Home</a>
+			<a href="svg-barcharts.html">Bar Charts</a>
+			<a href="svg-circles.html">Circle Chart</a>
+			<a href="scatterplot.html">Scatterplots</a>
+		</nav>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+
+			//dataset variable version 1
+			// var dataset = [5, 10, 15, 20, 25];
+			var dataset = [14, 25, 9, 20, 24, 2, 21, 4, 8, 16, 4, 7, 15, 7, 30, 5, 26];
+			
+			//dataset variable with randomly generated, rounded down numbers
+			// var dataset = [];
+			// for (var i = 0; i < 20; i++) {
+			// 	var newNumber = Math.floor(Math.random() * 35);
+			// 	dataset.push(newNumber);
+			// }
+			// console.log(dataset);
+
+			//svg example using circles w/ attr cx, cy, and r
+			var w = 1000;
+			var h = 100;
+				
+			var svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+
+			var circles = svg.selectAll("circle")
+							 .data(dataset)
+							 .enter()
+							 .append("circle")
+							 .attr("fill", function(d) {
+			   						return "rgb(" + (d * 10) + ", 0, 0)"
+			   				 });
+
+			circles.attr("cx", function(d, i) {
+						return (i * 100) + 50;
+			})
+					.attr("cy", h/2)
+					.attr("r", function(d) {
+						return d;
+			});
+
+
+		</script>	
+
+	</body>
+</html>

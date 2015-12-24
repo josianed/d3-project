@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="utf-8" http-equiv="encoding">
+		<title>D3 Page Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript" src="../d3/d3.v3.js"></script>
+		<nav>
+			<a href="../index.html">Home</a>
+			<a href="svg-barcharts.html">Bar Charts</a>
+			<a href="svg-circles.html">Circle Chart</a>
+			<a href="scatterplot.html">Scatterplots</a>
+		</nav>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+
+			//dataset variable version 1
+			// var dataset = [5, 10, 15, 20, 25];
+			var dataset = [14, 25, 9, 20, 24, 2, 21, 4, 8, 16, 4, 7, 15, 7, 30, 5, 26];
+			
+			//dataset variable with randomly generated, rounded down numbers
+			// var dataset = [];
+			// for (var i = 0; i < 20; i++) {
+			// 	var newNumber = Math.floor(Math.random() * 35);
+			// 	dataset.push(newNumber);
+			// }
+			// console.log(dataset);
+
+			//bar chart using svgs, with bars growing down from top
+			//set width and height variables and other attributes
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+
+			//create svg element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length); //bar width of 20 plus 1 for padding
+			   })
+			   .attr("y", 0)
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 5;
+			   })
+			   .attr("fill", function(d) {
+			   		return "rgb(0, " + (d * 10) + ", 0)"
+			   	});
+
+			//bar chart using svgs, with bars growing up from bottom
+			//set width and height variables and other attributes
+			var w = 500;
+			var h = 200;
+			var barPadding = 1;
+
+			//create svg element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return i * (w / dataset.length); //bar width of 20 plus 1 for padding
+			   })
+			   .attr("y", function(d) {
+			   		return h - d * 5;
+			   })
+			   .attr("width", w / dataset.length - barPadding)
+			   .attr("height", function(d) {
+			   		return d * 5;
+			   })
+			   .attr("fill", function(d) {
+			   		return "rgb(0, 0, " + (d * 10) + ")";
+			   });
+
+			svg.selectAll("text")
+				.data(dataset)
+				.enter()
+				.append("text")
+				.text(function(d) {
+					return d;
+				})
+				.attr("x", function(d, i) {
+					return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
+				})
+				.attr("y", function(d) {
+					return h - (d * 4) + 7;
+				})
+				.attr("font-family", "sans-serif")
+				.attr("font-size", "11px")
+				.attr("fill", "white")
+				.attr("text-anchor", "middle");
+
+
+		</script>	
+
+	</body>
+</html>
