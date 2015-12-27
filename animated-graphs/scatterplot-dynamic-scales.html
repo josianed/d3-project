@@ -7,12 +7,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script type="text/javascript" src="../d3/d3.v3.js"></script>
 		<nav>
-			<a href="../index.html">Home</a>
-			<a href="../graphs/svg-barcharts.html">Bar Charts</a>
-			<a href="../graphs/svg-circles.html">Circle Chart</a>
-			<a href="../graphs/scatterplot.html">Scatterplots</a>
-			<a href="scatterplot.html">Scaled Scatterplots</a>
-			<a href="scatterplot-animations.html">Scatterplots With Motion</a>
+			<ul>
+				<li><a href="../index.html">Home</a></li>
+				<li><a href="../static-graphs/div-barchart.html">Div Bar Chart</a></li>
+				<li><a href="../static-graphs/svg-barcharts.html">Bar Chart</a></li>
+				<li><a href="../static-graphs/svg-circles.html">Circle Chart</a></li>
+				<li><a href="../static-graphs/scatterplot.html">Scatterplot</a></li>
+				<li><a href="../static-graphs/scaled-scatterplot.html">Scaled Scatterplot</a></li>
+				<li><a href="barchart-animations.html">Bar Chart With Motion</a></li>
+				<li><a href="scatterplot-dynamic-scales.html">Scatterplot With Dynamic Scales</a></li>
+			</ul>
 		</nav>
 	</head>
 
@@ -25,7 +29,7 @@
 			// var dataset = [14, 25, 9, 20, 24, 6, 21, 4, 8, 16, 12, 7, 15, 23, 30, 5, 26, 17, 8, 13];
 			
 			//dataset variable with randomly generated, rounded down numbers
-			var maxValue = 50;
+			var maxValue = 25;
 			var dataset = [];
 			for (var i = 0; i < 20; i++) {
 				var newNumber = Math.floor(Math.random() * (maxValue - 1) + 1);

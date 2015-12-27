@@ -8,44 +8,19 @@
 		<script type="text/javascript" src="d3/d3.v3.js"></script>
 		<link rel="stylesheet" type="text/css" href="/styles/main.css">
 		<nav>
-			<a href="index.html">Home</a>
-			<a href="graphs/svg-barcharts.html">Bar Charts</a>
-			<a href="graphs/svg-circles.html">Circle Chart</a>
-			<a href="graphs/scatterplot.html">Scatterplots</a>
-			<a href="scales/scatterplot.html">Scaled Scatterplots</a>
-			<a href="scales/scatterplot-animations.html">Scatterplots With Motion</a>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="static-graphs/div-barchart.html">Div Bar Chart</a></li>
+				<li><a href="static-graphs/svg-barcharts.html">Bar Chart</a></li>
+				<li><a href="static-graphs/svg-circles.html">Circle Chart</a></li>
+				<li><a href="static-graphs/scatterplot.html">Scatterplot</a></li>
+				<li><a href="static-graphs/scaled-scatterplot.html">Scaled Scatterplot</a></li>
+				<li><a href="animated-graphs/barchart-animations.html">Bar Chart With Motion</a></li>
+				<li><a href="animated-graphs/scatterplot-dynamic-scales.html">Scatterplot With Dynamic Scales</a></li>
+			</ul>
 		</nav>
 
 	</head>
-
-	<body>
-		<script type="text/javascript">
-
-			//dataset variable version 1
-			// var dataset = [5, 10, 15, 20, 25];
-			var dataset = [14, 25, 9, 20, 24, 2, 21, 4, 8, 16, 4, 7, 15, 7, 30, 5, 26];
-			
-			//dataset variable with randomly generated, rounded down numbers
-			// var dataset = [];
-			// for (var i = 0; i < 20; i++) {
-			// 	var newNumber = Math.floor(Math.random() * 35);
-			// 	dataset.push(newNumber);
-			// }
-			// console.log(dataset);
-
-			// //bar chart example using divs
-			var div = d3.select("body").selectAll("div")
-				.data(dataset)
-				.enter()
-				.append("div")
-				.attr("class", "bar");
-
-				div.style("height", function(d) {
-					var barHeight = d * 2;
-					return barHeight + "px";
-				});
-
-		</script>	
 
 	</body>
 </html>
