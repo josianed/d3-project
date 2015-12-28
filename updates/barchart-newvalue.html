@@ -14,15 +14,15 @@
 				<li><a href="../static-graphs/svg-circles.html">Circle Chart</a></li>
 				<li><a href="../static-graphs/scatterplot.html">Scatterplot</a></li>
 				<li><a href="../static-graphs/scaled-scatterplot.html">Scaled Scatterplot</a></li>
-				<li><a href="barchart-animations.html">Bar Chart With Motion</a></li>
-				<li><a href="scatterplot-dynamic-scales.html">Scatterplot With Dynamic Scales</a></li>
-				<li><a href="../updates/barchart-newvalue.html">Adding New Value to Bar Chart</a></li>
+				<li><a href="../barchart-animations.html">Bar Chart With Motion</a></li>
+				<li><a href="../scatterplot-dynamic-scales.html">Scatterplot With Dynamic Scales</a></li>
+				<li><a href="barchart-newvalue.html">Adding New Value to Bar Chart</a></li>
 			</ul>
 		</nav>
 	</head>
 
 	<body>
-		<p>Click here to update the chart with new values.</p>
+		<p>Click here to add a new value to the chart.</p>
 		<script type="text/javascript">
 
 			//dataset variable version 1
@@ -106,34 +106,52 @@
 			  d3.select("p")
 			  		.on("click", function() {
 
-			  		// dataset = [11, 12, 15, 20, 18, 17, 16, 18, 23, 25, 
-			  		// 			5, 10, 13, 19, 21, 25, 22, 18, 15, 13];
+			  		//add one new value to the dataset
+			  		var maxValue = 25;
+			  		var newNumber = Math.floor(Math.random() * (maxValue - 1) + 1);
+			  		dataset.push(newNumber);
 
-			  		var dataset = [];
-					for (var i = 0; i < 20; i++) {
-						var newNumber = Math.floor(Math.random() * (maxValue - 1) + 1);
-						dataset.push(newNumber);
-					}
+			  		//update the domain to accomodate a new variable
+			  		xScale.domain(d3.range(dataset.length));
 
-					//updating the bands with new data
-					svg.selectAll("rect")
-						.data(dataset)
-						.transition()
-						//normalized delay time
-						.delay(function(d, i) {
-							return i / dataset.length * 1000;
-						})
-						.duration(1000)
-						.ease("linear")
-						.attr("y", function(d) {
-					   		return h - yScale(d);
-					   	})
-					   	.attr("height", function(d) {
-					   		return yScale(d);
-					   })
-					   .attr("fill", function(d) {
-			   				return "rgb(0, 0, " + (d * 10) + ")";
-			   			});
+			  		//select all bars and rebind the new data to them
+			  		var bars = svg.selectAll("rect")
+			  						.data(dataset);
+
+			  		//select all existing bars
+			  		svg.selectAll("rect")
+			  			.data(dataset)
+			  			.enter()
+			  			.append("rect");
+
+			  		//creating the new DOM element that was just added to the dataset
+			  		bars.enter()
+			  			.append("rect")
+			  			.attr("x", w) //create the bar just outside the far right edge of the SVG - want smooth transition into the bar chart
+			  			.attr("y", function(d) {
+			  					return h - yScale(d);
+			  			})
+			  			.attr("width", xScale.rangeBand())
+			  			.attr("height", function(d) {
+			  				return yScale(d);
+			  			})
+			  			.attr("fill", function(d) {
+			  				return "rgb(0, 0, " + (d * 10) + ")";
+			  			});
+
+			  		//transition the newly created bar into view
+			  		bars.transition()
+			  			.duration(500)
+			  			.attr("x", function(d, i) {
+			  				return xScale(i);
+			  			})
+			  			.attr("y", function(d) {
+			  				return h - yScale(d);
+			  			})
+			  			.attr("width", xScale.rangeBand())
+			  			.attr("height", function(d) {
+			  				return yScale(d);
+			  			});
 
 					//updating labels
 					svg.selectAll("text")
@@ -155,6 +173,7 @@
 			   				}
 			   			})
 				});
+
 
 		</script>	
 
